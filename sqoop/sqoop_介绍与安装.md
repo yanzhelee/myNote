@@ -3,8 +3,11 @@
 ## 1 概述
 
 sqoop是Apache旗下的一款“hadoop和关系型数据库服务器之间传送数据”的工具。
+
 **导入数据**：将关系型结构化数据如MySQL，oracle数据导入到hadoop的hdfs、hive、hbase的数据存储系统。
+
 **导出数据**：从hadoop的文件系统中导出数据到关系型数据库。
+
 ![](http://i.imgur.com/9h46sBy.png)
 
 ## 2 工作机制
@@ -17,7 +20,9 @@ sqoop是Apache旗下的一款“hadoop和关系型数据库服务器之间传送
 
 ### 3.1 下载并解压
 
-最新版下载地址[http://ftp.wayne.edu/apache/sqoop/1.4.6/](http://ftp.wayne.edu/apache/sqoop/1.4.6/)
+最新版下载地址
+
+[http://ftp.wayne.edu/apache/sqoop/1.4.6/](http://ftp.wayne.edu/apache/sqoop/1.4.6/)
 
 ### 3.2 修改配置文件
 
