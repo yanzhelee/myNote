@@ -6,7 +6,7 @@
 
 ## 1 java线程的五种基本状态
 
-![](http://i.imgur.com/4Ko086f.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/java/java_%E5%A4%9A%E7%BA%BF%E7%A8%8B_%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F_1.jpg)
 
 
 - 新建状态（New） 
