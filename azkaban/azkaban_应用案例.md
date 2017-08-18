@@ -58,11 +58,13 @@ command=/home/hadoop/apps/hadoop-2.6.1/bin/hadoop fs -mkdir /azaz
 MR任务依然可以使用command的job类型来执行
 
 1. 创建job描述文件及mr程序jar包（示例中直接使用hadoop自带的example jar）
-><pre>
+
+<pre>
 # mrwc.job
 type=command
 command=/home/hadoop/apps/hadoop-2.6.1/bin/hadoop jar hadoop-mapreduce-examples-2.6.1.jar wordcount /wordcount/input /wordcount/azout
 </pre>
+
 2. 将job资源文件打包成zip文件
 > ![](http://i.imgur.com/sQ8VE2Q.png)
 3. 通过azkaban的web管理平台创建project并上传job压缩包
