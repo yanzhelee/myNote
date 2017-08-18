@@ -67,7 +67,7 @@ Time taken: 0.22 seconds, Fetched: 3 row(s)
 不改变分区的级数，而是改变分区字段的值。
 两种方式：一种是先插入分区值，再往上放数据；二是插入分区和值同时进行。
 
-**方式一：**
+**方式一**
 先添加一个分区值city = 'shijiazhuang'，再往这个分区下插入数据
 ```hive
 hive>alter table emp add partition(provice = "hebei", city = "shijiazhuang");
@@ -82,7 +82,7 @@ hive>select * from emp where city = 'shijiazhuang';
 tomslee	26	hebei	shijiazhuang
 ```
 
-**方式二：**
+**方式二**
 在插入数据的时候直接指定新的分区，即把创建分区和插入数据两个步骤在一次完成
 ```hive
 hive>insert into emp partition(provice = 'hebei',city = 'aa') values ('hello',40);
@@ -151,15 +151,15 @@ hive>stored as textfile;
 ```hive
 hive>insert into table emp partition(country,state) select name,age,country,state from t1;
 ```
-**注意：**如果出现如下错误
+**注意**：如果出现如下错误
 
->```hive
+```hive
 FAILED: SemanticException [Error 10096]: 
 Dynamic partition strict mode requires at least one static partition column. 
 To turn this off set hive.exec.dynamic.partition.mode=nonstrict
 ```
->严格模式下，不允许所有的分区都被动态指定，目的是为了防止生成太多的目录.通过下面语句可以解决问题:
->```hive
+严格模式下，不允许所有的分区都被动态指定，目的是为了防止生成太多的目录.通过下面语句可以解决问题:
+```hive
 hive>set hive.exec.dynamic.partition.mode=nonstrict;
 ```
 
@@ -167,6 +167,7 @@ hive>set hive.exec.dynamic.partition.mode=nonstrict;
 在指定分区的时候，不指定其值，而只是指定分区的名称，在后面的查询语句中，所查询的最后两个字段就会被对应到这两个分区上，也就是说，前面分区不指定值的话，就会到后面的查询语句中去动态的寻找值，这时可以想象，后面的查询语句的字段必须是大于等于前面的分区数；
 
 ### 8.3 半动态分区表
+
 所谓半动态分区就是并不是所有的分区值都是动态指定的，其中有一部分是固定值，另一部分需要在查询列中动态赋值，例如：
 ```hive
 hive>insert into table emp partition(country = 'US',state) 
