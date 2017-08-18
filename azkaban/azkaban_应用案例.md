@@ -5,11 +5,13 @@ Azkaba内置的任务类型支持command、java
 ## 案例一（单个job）
 
 1. 创建job描述文件
-><pre>
+
+<pre>
 #command.job
 type=command                                                    
 command=echo 'hello'
 </pre>
+
 2. 将job资源文件打包成zip文件
 3. 通过azkaban的web管理平台创建project并上传job压缩包
 >首先创建project
