@@ -100,8 +100,11 @@ hive>
 ### 1.5 导入到hdfs指定的目录上
 
 在导入表数据到hdfs使用sqoop工具，我们可以指定目标目录。
+
 以下是指定目标目录选项的sqoop导入命令到的语法。
+
 `--target-dir<new directory in HDFS>`
+
 下面的命令是用来导入MySQL数据库的user数据表到hdfs的/user/test目录。
 
 ```
@@ -114,8 +117,9 @@ sqoop import \
 --m 1;
 ```
 
-**注意：**指定的hdfs的目录不能存在，因为sqoop会将这个目录作为MapReduce的输出目录。
+**注意**指定的hdfs的目录不能存在，因为sqoop会将这个目录作为MapReduce的输出目录。
 导入到hdfs上的输出数据格式如下：
+
 ```
 2,tom,15
 3,toms,25
@@ -127,8 +131,11 @@ sqoop import \
 ### 1.6 导入表数据子集
 
 我们可以导入表的"where"子句的一个子集通过sqoop工具。它执行在各自的数据库服务器相应的sql查询中，并将结果储存在hdfs的目标目录上。
+
 where子句的语法如下：
+
 `--where <condition>`
+
 下面的命令用来 导入usertable表的数据子集。子集查询用户的姓名和年龄。
 ```
 sqoop import \
@@ -141,7 +148,8 @@ sqoop import \
 --m 1;
 ```
 
-**注意：**指定的hdfs的目录不能存在，因为sqoop会将这个目录作为MapReduce的输出目录。
+**注意**指定的hdfs的目录不能存在，因为sqoop会将这个目录作为MapReduce的输出目录。
+
 导入到hdfs上的输出数据格式如下：
 ```
 2,tom,15
@@ -150,7 +158,9 @@ sqoop import \
 ### 1.7 增量导入数据
 
 增量导入是仅导入新添加的表中的行的技术。
+
 它需要添加'incremental','check-column','last-value'选项来执行增量导入。
+
 下面的语法用于sqoop导入命令 增量的选项。
 ```
 --incremental <mode>
@@ -175,18 +185,22 @@ sqoop import \
 ## 2 sqoop数据导出
 
 将数据从hdfs导出到RDBMS数据库。
+
 导出前，目标表必须存在于目标数据库中。
->默认操作是从将文件中的数据使用insert语句插入到mysql数据表中。
->更新模式下，是生成update语句更新表数据。
+
+> 默认操作是从将文件中的数据使用insert语句插入到mysql数据表中。
+> 更新模式下，是生成update语句更新表数据。
 
 ### 2.1 语法
 
 以下是export命令的语法。
+
 `sqoop export (generic-args) (export-args)`
 
 ### 2.2 案例一
 
 将hdfs中的数据导出到MySQL的usertable表中。
+
 ```
 sqoop export \
 --connect jdbc:mysql://mysqlhost:3306/userdb \
@@ -197,6 +211,7 @@ sqoop export \
 --input-fields-terminated-by '\001'
 --m 1;
 ```
+
 上述命令中的`input-fields-terminated-by '\001'`指的是输入的字段之间的分隔符，在hive中的默认分隔符为'\001'。
 
 验证：在MySQL中输入`select * from usertable;`
