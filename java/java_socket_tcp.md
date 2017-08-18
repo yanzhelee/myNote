@@ -16,7 +16,7 @@ ServerSocket类是java执行服务器端操作的基础类，该类运行于服�
 
 ServerSocket和Socket通信流程：
 
-![](http://i.imgur.com/02orEKc.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/java/java_socket_tcp_1.png)
 
 ## 2 ServerSocket
 
