@@ -67,5 +67,7 @@ hive>dfs -ls -R /;
 
 ##参考博文
 [http://blog.csdn.net/wisgood/article/details/17186139](http://blog.csdn.net/wisgood/article/details/17186139)
+
 [http://blog.chinaunix.net/uid-77311-id-4586440.html](http://blog.chinaunix.net/uid-77311-id-4586440.html)
+
 [http://blog.csdn.net/qq_31382921/article/details/53083201](http://blog.csdn.net/qq_31382921/article/details/53083201)
