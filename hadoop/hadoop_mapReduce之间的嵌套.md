@@ -6,7 +6,7 @@
 ## 案例描述
 
 根据log日志计算log中不同的IP地址数量是多少。测试数据如下图所示：
-![](http://i.imgur.com/5R4DnUo.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapReduce%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B5%8C%E5%A5%97_1.png)
 该日志中每个字段都是用Tab建分割的。
 
 ## 案例分析
@@ -88,7 +88,7 @@ public class IpCountReducer extends Reducer<Text, NullWritable, Text, NullWritab
 
 
 ###　流程图
-![](http://i.imgur.com/2pIr5XX.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapReduce%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B5%8C%E5%A5%97_2.png)
 
 ## 源码
 ### MR1 map源码
