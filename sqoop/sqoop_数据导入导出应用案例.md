@@ -59,7 +59,7 @@ O mapreduce.Job: map 0% reduce 0%
 
 默认情况下hdfs上面的数据字段之间用逗号（,）分割。
 
-![sqoop1](http://i.imgur.com/1ocr81G.png)
+![sqoop1](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/sqoop/sqoop_%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B_1.png)
 
 ### 1.4 导入到hive表中
 
@@ -73,7 +73,9 @@ sqoop import \
 --m 1;
 ```
 调用上述命令之前不用先建立hive数据表，由于没有指定hive的数据库，所以系统会在hive的default数据库下面建立一张usertable数据表。
-**数据传输过程：**
+
+**数据传输过程:**
+
 >1 从MySQL到hdfs上（通过MapReduce）
 >2 从hdfs迁移到hive中
 
