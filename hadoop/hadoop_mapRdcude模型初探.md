@@ -9,7 +9,7 @@
 
 MR详细的执行流程图：
 
-![MR详细的执行流程图](http://img.blog.csdn.net/20170711010423713?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDUyMTg0Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![MR详细的执行流程图](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapRdcude%E6%A8%A1%E5%9E%8B%E5%88%9D%E6%8E%A2_1.jpg)
 
 改图一共分为两大部分：
 1. map阶段
@@ -28,7 +28,7 @@ MR详细的执行流程图：
 
 shuffle过程如图所示：
 
-![shuffle过程](http://img.blog.csdn.net/20170711010517160?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDUyMTg0Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![shuffle过程](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapRdcude%E6%A8%A1%E5%9E%8B%E5%88%9D%E6%8E%A2_2.jpg)
 
 通过改图可知shuffle共分为五个阶段，下面进行详解。
 
@@ -55,7 +55,7 @@ shuffle过程如图所示：
 
 ### 2.4 Shuffle阶段排序流程详解
 
-![Shuffle阶段排序流程](http://img.blog.csdn.net/20170711010551858?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDUyMTg0Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![Shuffle阶段排序流程](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapRdcude%E6%A8%A1%E5%9E%8B%E5%88%9D%E6%8E%A2_3.jpg)
 
 MapReduce中的排序的总体流程
 > MapReduce框架会确保每一个Reducer的输入都是按Key进行排序的。一般，**将排序以及Map的输出传输到Reduce的过程称为混洗（shuffle)**。每一个Map都包含一个环形的缓存，默认100M，Map首先将输出写到缓存当中。当缓存的内容达到“阈值”时（阈值默认的大小是缓存的80%），一个后台线程负责将结果写到硬盘，这个过程称为“spill”。Spill过程中，Map仍可以向缓存写入结果，如果缓存已经写满，那么Map进行等待。
@@ -73,4 +73,5 @@ Shuffle排序综述：
 
 ## 参考博文：
 [http://blog.sina.com.cn/s/blog_d76227260101d948.html](http://blog.sina.com.cn/s/blog_d76227260101d948.html)
+
 [http://blog.csdn.net/u014307117/article/details/45223291](http://blog.csdn.net/u014307117/article/details/45223291)
