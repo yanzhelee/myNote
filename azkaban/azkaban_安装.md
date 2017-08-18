@@ -234,4 +234,4 @@ executor.flow.threads=30                          #线
  
 启动完成后,在浏览器(建议使用谷歌浏览器)中输入https://服务器IP地址:8443 ,即可访问azkaban服务了.在登录中输入刚才新的户用名及密码,点击 login.
 
-![](http://i.imgur.com/Pzphu8N.png)
+![](../images/azkaban/azkaban登陆界面.png)
