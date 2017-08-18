@@ -65,7 +65,8 @@ hive>dfs -ls -R /;
 ## 总结
 在团队开发中，在hdfs上存放重要数据时不要使用内部表，都是使用外部表关联数据。
 
-##参考博文
+## 参考博文
+
 [http://blog.csdn.net/wisgood/article/details/17186139](http://blog.csdn.net/wisgood/article/details/17186139)
 
 [http://blog.chinaunix.net/uid-77311-id-4586440.html](http://blog.chinaunix.net/uid-77311-id-4586440.html)
