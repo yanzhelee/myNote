@@ -1,4 +1,4 @@
-# 《Hive编程指南》笔记一
+# 《Hive编程指南》笔记一（待整理）
 
 1、hive不支持行级插入操作、更新操作和删除操作。hive不支持事务。
 
@@ -30,7 +30,8 @@ test hdfs://master-server/user/hive/warehouse/test.db
 ```
 create external table testtable1 like testable;
 ```
-**注意：**如果语句中省略external关键字而且原表是外部表的话，那么生成的新表也是外部表。如果语句中省略external关键字二期源表是管理表的话，那么生成的新表也是管理表。但是如果语句中包含eternal关键字而且源表是管理表的话，那么生成的新表僵尸外部表。
+
+**注意**如果语句中省略external关键字而且原表是外部表的话，那么生成的新表也是外部表。如果语句中省略external关键字二期源表是管理表的话，那么生成的新表也是管理表。但是如果语句中包含eternal关键字而且源表是管理表的话，那么生成的新表僵尸外部表。
 
 ----------
 
