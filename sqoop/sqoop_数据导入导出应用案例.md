@@ -7,6 +7,7 @@
 ### 1.1 语法
 
 下面的命令用于将数据导入到hdfs上。
+
 `$sqoop import (generic-args) (import-args)`
 
 ### 1.2 测试数据
@@ -23,6 +24,7 @@
 ### 1.3 导入表中数据到HDFS
 
 下面的命令用于从MySQL数据库服务器中的usertable表导入数据到hdfs。
+
 ```
 sqoop import \
 --connect jdbc:mysql://mysqlhost:3306/userdb \
@@ -50,9 +52,13 @@ O mapreduce.Job: map 0% reduce 0%
 ```
 
 上述的过程由于没有指定hdfs的保存位置，所以系统会分配一个默认的地址，该地址根据当前的用户名和表名生成的。
+
 为了验证在hdfs导入的数据，使用下面的命令可以查看：
+
 `hadoop fs -cat /user/hadoop/userdb/part-m-00000`
+
 默认情况下hdfs上面的数据字段之间用逗号（,）分割。
+
 ![sqoop1](http://i.imgur.com/1ocr81G.png)
 
 ### 1.4 导入到hive表中
@@ -307,5 +313,7 @@ export主要参数
 ## 4 参考博文
 
 [http://www.cnblogs.com/cenyuhai/p/3306056.html](http://www.cnblogs.com/cenyuhai/p/3306056.html)
+
 [http://www.aboutyun.com/thread-9983-1-1.html](http://www.aboutyun.com/thread-9983-1-1.html)
+
 [http://blog.csdn.net/wangyang1354/article/details/52936400](http://blog.csdn.net/wangyang1354/article/details/52936400)
