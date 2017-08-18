@@ -15,11 +15,11 @@ command=echo 'hello'
 2. 将job资源文件打包成zip文件
 3. 通过azkaban的web管理平台创建project并上传job压缩包
 >首先创建project
-> ![](https://github.com/yanzhelee/myNote/blob/master/images/azkaban/azkaban1.png)
+> ![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/azkaban/azkaban1.png)
 >上传zip包
->![](http://i.imgur.com/taspBYt.png)
+>![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/azkaban/azkaban2.png)
 4. 启动执行该job
-![](http://i.imgur.com/MfNAHF7.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/azkaban/azkaban3.png)
 
 ## 案例二（多job工作流flow）
 
@@ -39,7 +39,7 @@ dependencies=foo
 command=echo bar
 </pre>
 2. 将所有job资源文件打到一个zip包中
-> ![](http://i.imgur.com/X8aSJ30.png)
+> ![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/azkaban/azkaban4.png)
 3. 在azkaban的web管理界面创建工程并上传zip包
 
 ## 案例三（HDFS操作任务）
@@ -51,7 +51,7 @@ type=command
 command=/home/hadoop/apps/hadoop-2.6.1/bin/hadoop fs -mkdir /azaz
 </pre>
 2. 将job资源文件打包成zip文件
-> ![](http://i.imgur.com/k3tOpFv.png)
+> ![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/azkaban/azkaban5.png)
 3. 通过azkaban的web管理平台创建project并上传job压缩包
 4. 启动执行该job
 
@@ -67,6 +67,6 @@ type=command
 command=/home/hadoop/apps/hadoop-2.6.1/bin/hadoop jar hadoop-mapreduce-examples-2.6.1.jar wordcount /wordcount/input /wordcount/azout
 </pre>
 2. 将job资源文件打包成zip文件
-> ![](http://i.imgur.com/sQ8VE2Q.png)
+> ![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/azkaban/azkaban6.png)
 3. 通过azkaban的web管理平台创建project并上传job压缩包
 4. 启动执行该job
