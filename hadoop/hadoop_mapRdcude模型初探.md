@@ -28,7 +28,7 @@ MR详细的执行流程图：
 
 shuffle过程如图所示：
 
-![shuffle过程](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapRdcude%E6%A8%A1%E5%9E%8B%E5%88%9D%E6%8E%A2_2.jpg)
+![shuffle过程](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapRdcude%E6%A8%A1%E5%9E%8B%E5%88%9D%E6%8E%A2_2.png)
 
 通过改图可知shuffle共分为五个阶段，下面进行详解。
 
