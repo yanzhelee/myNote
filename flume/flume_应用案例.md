@@ -145,7 +145,7 @@ a1.sinks.k1.channel = c1
 ```$nc localhost 44444```
 然后在下面随意输入内容进行测试，测试结果如下图：
 
-![](http://i.imgur.com/CJiZzAG.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/flume/flume_%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B_hdfs%E6%88%AA%E5%9B%BE.png)
 
 ## 4 案例三
 
