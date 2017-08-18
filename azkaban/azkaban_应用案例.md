@@ -24,34 +24,34 @@ command=echo 'hello'
 ## 案例二（多job工作流flow）
 
 1. 创建有依赖关系的多个job描述
-> 第一个job：foo.job
-><pre>
+第一个job：foo.job
+<pre>
 #foo.job
 type=command
 command=echo foo
 </pre>
->
-> 第二个job：bar.job依赖foo.job
-> <pre>
+
+第二个job：bar.job依赖foo.job
+<pre>
 # bar.job
 type=command
 dependencies=foo
 command=echo bar
 </pre>
 2. 将所有job资源文件打到一个zip包中
-> ![](http://i.imgur.com/X8aSJ30.png)
+![](http://i.imgur.com/X8aSJ30.png)
 3. 在azkaban的web管理界面创建工程并上传zip包
 
 ## 案例三（HDFS操作任务）
 
 1. 创建job描述文件
-><pre>
+<pre>
 # fs.job
 type=command
 command=/home/hadoop/apps/hadoop-2.6.1/bin/hadoop fs -mkdir /azaz
 </pre>
 2. 将job资源文件打包成zip文件
-> ![](http://i.imgur.com/k3tOpFv.png)
+![](http://i.imgur.com/k3tOpFv.png)
 3. 通过azkaban的web管理平台创建project并上传job压缩包
 4. 启动执行该job
 
