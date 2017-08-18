@@ -1,14 +1,14 @@
 # flume架构总结
 
 介绍flume之前先看一下Hadoop业务的整体流程开发：
-![](http://i.imgur.com/freI4fd.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/flume/flume%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93_1.png)
 从hadoop的业务流程图中可以看出，在大数据的业务逻辑处理过程中，对于数据的搜集是十分重要的一步，也是不可避免的一步，本文下面将对flume的架构进行详细的介绍。
 
 ## 1.flume概念
 
 flume是一个分布式、可靠和高可用的海量日志聚合的系统，支持在系统中地址各类数据发送方，用于手机数据；同时，flume提供对数据进行简单处理，并写到各种数据接收方（可定制）的能力。
 
-![](http://flume.apache.org/_images/DevGuide_image00.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/flume/flume%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93_2.png)
 
 ### 1.1设计目标
 
@@ -39,9 +39,9 @@ Flume采用了三层架构，分别为agent，collector和storage，每一层均
 
 flume的核心就是把数据从数据源（source）收集过来，再将收集到的数据送到指定的目的地（sink）。为了保证输送的过程一定成功，在送到目的地之前，会先缓存数据（channel），待数据真正的送到目的地（sink）后，flume再删除缓存中的数据（channel中的数据）。
 在整个数据的传输过程中，流动的是event，即事务保证是在event级别进行的。那么什么是event呢？——event将传输的数据进行封装，是flume传输数据的基本单位，如果是文本文件，通常是一行记录，event也是事务的基本单位。event从source，流向channel，再到sink，本身为一个字节数组，并可携带header信息，event代表着一个数据的最小完整单元，从外部数据源来，想外部的目的地去。形象展示如下图：
-![](http://i.imgur.com/lmMGnFc.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/flume/flume%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93_3.png)
 一个完整的event包括：event headers,event body, event信息（即文本文件中的单行记录）。
-![](http://img.blog.csdn.net/20160530163629374)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/flume/flume%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93_4.png)
 其中event就是flume收集到的日志记录。
 
 ## 3.flume架构介绍
