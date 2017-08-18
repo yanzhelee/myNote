@@ -8,7 +8,7 @@ sqoop是Apache旗下的一款“hadoop和关系型数据库服务器之间传送
 
 **导出数据**：从hadoop的文件系统中导出数据到关系型数据库。
 
-![](http://i.imgur.com/9h46sBy.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/sqoop/sqoop_%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%89%E8%A3%85_1.png)
 
 ## 2 工作机制
 
