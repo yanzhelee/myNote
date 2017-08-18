@@ -16,9 +16,10 @@
 ### 实现方法
 
 该任务分为两个MR过程，第一个MR（**命名为MR1**）负责将重复的ip地址去掉，然后将无重复的ip地址进行输出。第二个MR（**命名为MR2**）负责将MR1输出的ip地址文件进行汇总，然后将计算总数输出。
-- MR1阶段
 
-	- ** map过程 **
+#### MR1阶段
+
+**map过程**
 ````java
 public class IpFilterMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
 
@@ -36,10 +37,11 @@ public class IpFilterMapper extends Mapper<LongWritable, Text, Text, NullWritabl
 输入的key和value是文本的行号和每行的内容。
 输出的key是ip地址，输出的value为空类型。
 
-	- **shuffle过程**
+**shuffle过程**
+
 > 主要是针对map阶段输出的key进行排序和分组，将相同的key分为一组，并且将相同key的value放到同一个集合里面，所以不同的组绝对不会出现相同的ip地址，分好组之后将值传递给reduce。**注：该阶段是hadoop系统自动完成的，不需要程序员编程**
 
-	- **reduce过程**
+**reduce过程**
 ```` java
  public class IpFilterReducer extends Reducer<Text, NullWritable, Text, NullWritable> {
 
@@ -52,8 +54,9 @@ public class IpFilterMapper extends Mapper<LongWritable, Text, Text, NullWritabl
 ````
 由于经过shuffle阶段之后所有输入的key都是不同的，也就是ip地址是无重复的，所以可以直接输出。
 
-- MR2阶段
-	- ** map过程 **
+#### MR2阶段
+**map过程**
+
 ````java
 public class IpCountMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
 
@@ -66,10 +69,13 @@ public class IpCountMapper extends Mapper<LongWritable, Text, Text, NullWritable
 	}
 }
 ````
-	- **shuffle过程**
+
+**shuffle过程**
+
 > 按照相同的key进行分组，由于map阶段所有的key都一样，所以最后只有一组。
 
-	- **reduce过程**
+**reduce过程**
+
 ````java
 public class IpCountReducer extends Reducer<Text, NullWritable, Text, NullWritable> {
 
@@ -87,7 +93,8 @@ public class IpCountReducer extends Reducer<Text, NullWritable, Text, NullWritab
 ````
 
 
-###　流程图
+### 流程图
+
 ![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_mapReduce%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B5%8C%E5%A5%97_2.png)
 
 ## 源码
@@ -139,6 +146,7 @@ public class IpFilterReducer extends Reducer<Text, NullWritable, Text, NullWrita
 ````
 
 ### MR2 map源码
+
 ````java
 package com.ipcount.mrmr;
 
@@ -162,6 +170,7 @@ public class IpCountMapper extends Mapper<LongWritable, Text, Text, NullWritable
 ````
 
 ### MR2 reduce源码
+
 ````java
 package com.ipcount.mrmr;
 
