@@ -82,7 +82,7 @@ MapReduce可以在三个阶段中使用压缩。
 
 我们前面已经提到过关于压缩的使用方式，其中第一种就是将压缩文件直接作为入口参数交给MapReduce处理，MapReduce会自动根据压缩文件的扩展名来自动选择合适解压器处理数据，那么到底是怎么实现的呢？如下图所示：
 
-![](https://www.ibm.com/developerworks/cn/opensource/os-cn-hadoop-compression-analysis/img004.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9_%E5%8E%8B%E7%BC%A9%E5%AE%9E%E7%8E%B0%E6%83%85%E5%BD%A2.png)
 
 我们在配置Job作业的时候，会设置数据输入的格式化方式，使用`conf.setInputFormat()`方法，这里的入口参数是`TextInputFormat.class`。
 
@@ -90,7 +90,7 @@ MapReduce可以在三个阶段中使用压缩。
 
 下图是压缩与解压缩类框架结构图
 
-![压缩解压缩类图](http://i.imgur.com/ZxChG8o.png)
+![压缩解压缩类图](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9_%E6%A1%86%E6%9E%B6.png)
 
 
 ### 编码/解码器
@@ -506,7 +506,7 @@ Compressor通过setInput()方法接收数据到内容缓冲区，自然可以多
 
 压缩器(Compressor)和解压缩器(Decompressor)类图如下：
 
-![](http://i.imgur.com/IyIlYTQ.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9_%E5%8E%8B%E7%BC%A9%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%99%A8.png)
 
 #### Compressor源码解析
 
