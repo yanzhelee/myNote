@@ -19,6 +19,8 @@
 
 #### MR1阶段
 
+----------
+
 **map过程**
 ````java
 public class IpFilterMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
@@ -55,6 +57,9 @@ public class IpFilterMapper extends Mapper<LongWritable, Text, Text, NullWritabl
 由于经过shuffle阶段之后所有输入的key都是不同的，也就是ip地址是无重复的，所以可以直接输出。
 
 #### MR2阶段
+
+----------
+
 **map过程**
 
 ````java
