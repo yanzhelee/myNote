@@ -3,7 +3,7 @@
 装饰模式就是添加一些额外的功能（装饰作用）。装饰使得我们可以动态的为对象添加一些功能，而无需事先在类中定义。
 装饰模式结构图如下：
 
-![](http://i.imgur.com/JyxvkgO.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/java/java_%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F_%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F_1.png)
 
 ## 1 概述
 
