@@ -62,7 +62,7 @@ flume的核心就是agent，这个agent对外有两个进行交互的地方，�
 ## 5.flume的广义用法
 
 flume之所以这么神奇，其原因也在于flume可以支持多级flume的agent，即flume可以先后相继，例如sink可以将数据写到下一个agent的source中，这样的话就可以连成串，可以整体处理。flume还支持扇入（fan-in）、扇出（fan-out）。所谓扇入就是source可以接受多个输入，所谓扇出就是sink可以将数据输出多个目的地destination中。
-![](http://flume.apache.org/_images/UserGuide_image02.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/flume/flume%E6%9E%B6%E6%9E%84%E6%80%BB%E7%BB%93_5.png)
 
 ## 参考博文
 
