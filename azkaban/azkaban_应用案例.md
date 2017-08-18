@@ -15,7 +15,7 @@ command=echo 'hello'
 2. 将job资源文件打包成zip文件
 3. 通过azkaban的web管理平台创建project并上传job压缩包
 >首先创建project
-> ![](http://i.imgur.com/TfQmWrB.png)
+> ![](https://github.com/yanzhelee/myNote/blob/master/images/azkaban/azkaban1.png)
 >上传zip包
 >![](http://i.imgur.com/taspBYt.png)
 4. 启动执行该job
