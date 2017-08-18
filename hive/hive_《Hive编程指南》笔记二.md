@@ -2,7 +2,7 @@
 
 ## 1 Group by 和having
 
-**注意：**select后的字段，必须要么包含在group by中，或者使用聚合函数。
+**注意**select后的字段，必须要么包含在group by中，或者使用聚合函数。
 
 1 group by是分组查询，一般group by是和聚合函数配合使用
 >group by有一个个原则，就是select后面的所有列中，没有使用聚合函数的列，必须出现在group by后面。
