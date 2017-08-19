@@ -5,7 +5,7 @@
 ChainMapper/ChainReducer主要为了解决线性链式Mapper而提出的。也就是说，在Map或者Reduce阶段存在多个Mapper，这些Mapper像linux管道一样，前一个Mapper的输出结果直接重定向到下一个Mapper的输入，形成一个流水线，形式类似于`[MAP + REDUCE MAP*]`。下图展示了一个典型的ChainMapper/ChainReducer的应用场景。
 在Map阶段，数据依次经过Mapper1和Mapper2处理；在Reducer阶段，数据经过shuffle和sort排序后，交给对应的Reduce处理，但Reducer处理之后还可以交给其它的Mapper进行处理，最终产生的结果写入到hdfs输出目录上。
 
-![](../images/hadoop/temp/ChainMapper_ChainReducer.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_ChainMapper_ChainReducer_1.png)
 
 | **注意**：对于任意一个MapReduce作业，Map和Reduce阶段可以有无限多个Mapper，但是Reducer只能有一个。 |
 | ------------------------------------------------------------------------------------------------- |
