@@ -101,7 +101,7 @@ CompressionCodec接口实现可编码/解码器，使用的是抽象工厂的设
 
 ```java
 //根据底层输出流，创建对应压缩算法的压缩流
-createOutputStream(OutputStream out) 
+createOutputStream(OutputStream out)
 //可使用压缩器创建压缩流
 createOutputStream(OutputStream out, Compressor compressor)
 
@@ -122,35 +122,35 @@ createDecompressor()
 public interface CompressionCodec {
 
   // 在底层输出流 out 的基础上创建对应压缩算法的压缩流 CompressionOutputStream 对象
-  CompressionOutputStream createOutputStream(OutputStream out) 
+  CompressionOutputStream createOutputStream(OutputStream out)
   throws IOException;
-  
+
   // 使用压缩器 compressor， 在底层输出流 out 的基础上创建对应的压缩流
-  CompressionOutputStream createOutputStream(OutputStream out, 
-                                             Compressor compressor) 
+  CompressionOutputStream createOutputStream(OutputStream out,
+                                             Compressor compressor)
   throws IOException;
 
   //得到压缩器类型
   Class<? extends Compressor> getCompressorType();
-  
+
   // 创建压缩算法对应的压缩器
   Compressor createCompressor();
-  
+
   //根据底层的输入流，创建对应的解压缩算法的解压缩流
   CompressionInputStream createInputStream(InputStream in) throws IOException;
-  
+
   //可使用解压缩器创建解压缩流
-  CompressionInputStream createInputStream(InputStream in, 
-                                           Decompressor decompressor) 
+  CompressionInputStream createInputStream(InputStream in,
+                                           Decompressor decompressor)
   throws IOException;
 
 
   //获取压缩类型
   Class<? extends Decompressor> getDecompressorType();
-  
+
   //创建解压缩器
   Decompressor createDecompressor();
-  
+
   // 获得压缩算法对应的文件扩展名
   String getDefaultExtension();
 
@@ -383,54 +383,54 @@ public class Codec {
 #### CompressionCodecFactory源码分析
 
 ```java
-public class CompressionCodecFactory {  
+public class CompressionCodecFactory {
 
-  /** 
-   * 所有的解压缩编码类放入 codecs Map图中，CompressionCodec是一个基类， 
-   * 允许添加上其所继承的子类 
-   */  
+  /**
+   * 所有的解压缩编码类放入 codecs Map图中，CompressionCodec是一个基类，
+   * 允许添加上其所继承的子类
+   */
   private SortedMap<String, CompressionCodec> codecs = null;
 
-  /** 
+  /**
    * 初始化的时候，可以根据配置加入自己希望的压缩算法种类
-   * 根据配置初始化压缩编码工厂，默认添加的是gzip和zip编码类 
-   */  
-  public CompressionCodecFactory(Configuration conf) {  
-    codecs = new TreeMap<String, CompressionCodec>();  
-    List<Class<? extends CompressionCodec>> codecClasses = getCodecClasses(conf);  
-    if (codecClasses == null) {  
-      //如果没有编码类的设置，则加入gzip,defaultCode  
-      addCodec(new GzipCodec());  
-      addCodec(new DefaultCodec());        
-    } else {  
-      Iterator<Class<? extends CompressionCodec>> itr = codecClasses.iterator();  
-      while (itr.hasNext()) {  
-        CompressionCodec codec = ReflectionUtils.newInstance(itr.next(), conf);  
-        addCodec(codec);       
-      }  
-    }  
-  } 
+   * 根据配置初始化压缩编码工厂，默认添加的是gzip和zip编码类
+   */
+  public CompressionCodecFactory(Configuration conf) {
+    codecs = new TreeMap<String, CompressionCodec>();
+    List<Class<? extends CompressionCodec>> codecClasses = getCodecClasses(conf);
+    if (codecClasses == null) {
+      //如果没有编码类的设置，则加入gzip,defaultCode
+      addCodec(new GzipCodec());
+      addCodec(new DefaultCodec());
+    } else {
+      Iterator<Class<? extends CompressionCodec>> itr = codecClasses.iterator();
+      while (itr.hasNext()) {
+        CompressionCodec codec = ReflectionUtils.newInstance(itr.next(), conf);
+        addCodec(codec);
+      }
+    }
+  }
 
-	/** 
+	/**
 	 * 通过名字获取，其实这种模式类似于享受模式，达到对象的复用效果了。
-	 */  
-	public CompressionCodec getCodec(Path file) {  
-	  CompressionCodec result = null;  
-	  if (codecs != null) {  
-	    String filename = file.getName();  
-	    String reversedFilename = new StringBuffer(filename).reverse().toString();  
-	    SortedMap<String, CompressionCodec> subMap =   
-	      codecs.headMap(reversedFilename);  
-	    if (!subMap.isEmpty()) {  
-	      String potentialSuffix = subMap.lastKey();  
-	      //根据比对名字，从codecs Map中取出对应的CompressionCodec  
-	      if (reversedFilename.startsWith(potentialSuffix)) {  
-	        result = codecs.get(potentialSuffix);  
-	      }  
-	    }  
-	  }  
-	  return result;  
-	} 
+	 */
+	public CompressionCodec getCodec(Path file) {
+	  CompressionCodec result = null;
+	  if (codecs != null) {
+	    String filename = file.getName();
+	    String reversedFilename = new StringBuffer(filename).reverse().toString();
+	    SortedMap<String, CompressionCodec> subMap =
+	      codecs.headMap(reversedFilename);
+	    if (!subMap.isEmpty()) {
+	      String potentialSuffix = subMap.lastKey();
+	      //根据比对名字，从codecs Map中取出对应的CompressionCodec
+	      if (reversedFilename.startsWith(potentialSuffix)) {
+	        result = codecs.get(potentialSuffix);
+	      }
+	    }
+	  }
+	  return result;
+	}
 ```
 
 上面的getCodec()方法，为某一个压缩文件寻找对应的CompressionCodec。为了分析该方法， 需要了解 CompressionCodec 类中保存文件扩展名和CompressionCodec 映射关系的成员变量 codecs。codecs 是一个有序映射表， 即它本身是一个Map， 同时它对 Map 的键排序， 下面是codecs中保存的一个可能的映射关系：
@@ -444,51 +444,51 @@ zg.: org.apache.hadoop.io.compress.GzipCodec
 }
 ```
 
-可以看到， Map 中的键是排序的。getCodec() 方法的输入是 Path 对象， 保存着文件路径， 如实例中的“README.txt.bz2” 。首先通过获取 Path 对象对应的文件名并逆转该字符串得到“2zb.txt.EMDAER” ， 然后通过有序映射 SortedMap 的 headMap() 方法， 查找最接近上述逆转字符串的有序映射的部分视图， 如输入“2zb.txt.EMDAER”的查找结果subMap， 只包含“2zb.”对应的那个键 – 值对，如果输入是“zg.txt.EMDAER” ， 则 subMap 会包含成员变量 codecs 中保存的所有键 – 值对。然后， 简单地获取 subMap 最后一个元素的键， 如果该键是逆转文件名的前缀， 那么就找到了文件对应的编码/解码器， 否则返回空。 
+可以看到， Map 中的键是排序的。getCodec() 方法的输入是 Path 对象， 保存着文件路径， 如实例中的“README.txt.bz2” 。首先通过获取 Path 对象对应的文件名并逆转该字符串得到“2zb.txt.EMDAER” ， 然后通过有序映射 SortedMap 的 headMap() 方法， 查找最接近上述逆转字符串的有序映射的部分视图， 如输入“2zb.txt.EMDAER”的查找结果subMap， 只包含“2zb.”对应的那个键 – 值对，如果输入是“zg.txt.EMDAER” ， 则 subMap 会包含成员变量 codecs 中保存的所有键 – 值对。然后， 简单地获取 subMap 最后一个元素的键， 如果该键是逆转文件名的前缀， 那么就找到了文件对应的编码/解码器， 否则返回空。
 
 #### 使用CompressionCodecFactory解压缩
 
 ```java
-import org.apache.hadoop.conf.Configuration;  
-import org.apache.hadoop.fs.FileSystem;  
-import org.apache.hadoop.fs.Path;  
-import org.apache.hadoop.io.IOUtils;  
-import org.apache.hadoop.io.compress.CompressionCodec;  
-import org.apache.hadoop.io.compress.CompressionCodecFactory;  
-  
-import java.io.IOException;  
-import java.io.InputStream;  
-import java.io.OutputStream;  
-import java.net.URI;  
-   
-public class FileDecompressor {  
-    public static void main(String[] args) throws Exception {  
-        String uri = args[0];  
-        Configuration conf = new Configuration();  
-        FileSystem fs = FileSystem.get(URI.create(uri), conf);  
-  
-        Path inputPath = new Path(uri);  
-        CompressionCodecFactory factory = new CompressionCodecFactory(conf);  
-        CompressionCodec codec = factory.getCodec(inputPath);  
-        if (codec == null) {  
-            System.out.println("No codec found for " + uri);  
-            System.exit(1);  
-        }  
-        String outputUri = CompressionCodecFactory.removeSuffix(uri, codec.getDefaultExtension());  
-  
-        InputStream in = null;  
-        OutputStream out = null;  
-  
-        try {  
-            in = codec.createInputStream(fs.open(inputPath));  
-            out = fs.create(new Path(outputUri));  
-            IOUtils.copyBytes(in,out,conf);  
-        } finally {  
-            IOUtils.closeStream(in);  
-            IOUtils.closeStream(out);  
-        }  
-    }  
-}  
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop.io.compress.CompressionCodecFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+
+public class FileDecompressor {
+    public static void main(String[] args) throws Exception {
+        String uri = args[0];
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(uri), conf);
+
+        Path inputPath = new Path(uri);
+        CompressionCodecFactory factory = new CompressionCodecFactory(conf);
+        CompressionCodec codec = factory.getCodec(inputPath);
+        if (codec == null) {
+            System.out.println("No codec found for " + uri);
+            System.exit(1);
+        }
+        String outputUri = CompressionCodecFactory.removeSuffix(uri, codec.getDefaultExtension());
+
+        InputStream in = null;
+        OutputStream out = null;
+
+        try {
+            in = codec.createInputStream(fs.open(inputPath));
+            out = fs.create(new Path(outputUri));
+            IOUtils.copyBytes(in,out,conf);
+        } finally {
+            IOUtils.closeStream(in);
+            IOUtils.closeStream(out);
+        }
+    }
+}
 ```
 
 ### 压缩器和解压缩器
@@ -500,7 +500,7 @@ Compressor通过setInput()方法接收数据到内容缓冲区，自然可以多
 
 ----------
 
-**注意：**finish()和finished()的作用不同，finish()结束数据输入的过程，而finished()返回false，表明压缩器中还有未读取的压缩数据，可以继续通过compress()方法读取。
+**注意**:finish()和finished()的作用不同，finish()结束数据输入的过程，而finished()返回false，表明压缩器中还有未读取的压缩数据，可以继续通过compress()方法读取。
 
 ----------
 
