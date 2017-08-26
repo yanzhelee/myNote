@@ -32,13 +32,13 @@ HBase是Google Bigtable的开源实现，与Google Bigtable利用GFS作为其文
 
 Hadoop是一个高容错，高延时的分布式文件系统和高并发的皮处理系统，不适用于提供实时计算；HBase是一个可以提供实时计算的分布式数据库，数据被保存在hdfs分布式文件系统中，有hdfs保证高容错性，但是在生产环境中，HBase是如何基于Hadoop提供实时性呢？HBase上的数据是以StroeFile(HFile)二进制文件，也就是说，HBase的存储数据对于hdfs文件系统是透明的。下面是HBase文件在HDFS上的存储示意图。
 
-![](../images/hbase/1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_%E6%A6%82%E8%BF%B01.png)
 
 HBase HRegion servers集群中的所有的region的数据在服务器启动时都是被打开的，并且在内存初始化一些memstore，相应的这就在一定程度上加快系统相应；而Hadoop中的block中的数据文件默认是关闭的，只有在需要的时候才打开，处理完数据后就 关闭，这在一定程度上就增加了响应时间。
 
 从根本上说，HBase能提供实时计算服务主要原因是由其架构和底层的数据结构决定的，即由LSM-Tree + HTable(region分区) + Chche决定。客户端可以直接 定位到要查数据所在的HRegion server服务器，然后直接在服务器的一个region上查找要匹配的数据，并且这些数据部分是经过cache缓存的。具体查询 流程如下图所示：
 
-![](../images/hbase/2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_%E6%A6%82%E8%BF%B02.png)
 
 具体数据访问流程如下：
 
@@ -53,7 +53,7 @@ HBase HRegion servers集群中的所有的region的数据在服务器启动时�
 
 HBase以表的形式存储数据。表由行和列组成。列划分为若干个列族(row family),如下图所示。
 
-![](../images/hbase/3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_%E6%A6%82%E8%BF%B03.png)
 
 HBase的逻辑数据模型如下：
 
@@ -63,7 +63,7 @@ HBase是一个面向列的数据库，在表中它由行排序。表模式只能
 - 列簇是列的集合
 - 列是键值对的集合
 
-![](../images/hbase/4.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_%E6%A6%82%E8%BF%B04.png)
 
 ### ROW Key
 
@@ -95,11 +95,11 @@ Cell是由`{row key, column(=<family> + <table>),version}`唯一确定的单元�
 
 Table在行的方向上分割为多个HRegion，每个HRegion分散在不同的RegionServer中。
 
-![](../images/hbase/5.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_%E6%A6%82%E8%BF%B05.png)
 
 每个HRegion由多个Store构成，每个Store由一个memStore和0或者多个StoreFile组成，每个Store保存一个Columns Family.
 
-![](../images/hbase/6.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_%E6%A6%82%E8%BF%B06.png)
 
 
 ## 参考博文
