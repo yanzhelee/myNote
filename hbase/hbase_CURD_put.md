@@ -113,7 +113,7 @@ boolean isAutoFlush()
 
 `flushCommits()`方法将所有的修改传送给远程服务器。被缓冲的Put实例可以跨多行。客户端能够批量处理这些更新，并把他们传送到对应regionServer。和调用单行put()方法一样，用户不需要担心数据分配到了哪里，因为对于用户来说，HBase客户端对这个方法的处理是透明的，下图展示了在客户端请求传送到服务器之前是怎样按regionServer排序分组，并通过每个regionServer的RPC请求将数据传送到服务器的。
 
-![客户端put操作按所属region服务器排序和分组](../imags/hbase/hbase_CURD_put1.png)
+![客户端put操作按所属region服务器排序和分组](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hbase/hbase_CURD_put1.png)
 
 **缓冲区仅在两种情况下会刷新**
 - 显示刷新
