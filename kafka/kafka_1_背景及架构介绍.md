@@ -71,7 +71,7 @@ Kafka是一种分布式的，基于发布/订阅的消息系统。主要设计�
 
 ### Kafka拓扑结构
 
-![Kafka拓扑图](../images/kafka/kafka_1_1.png)
+![Kafka拓扑图](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_1_1.png)
 
 如上图所示，一个典型的Kafka集群中包含若干Producer(可以是web前端产生的Page View，或者是服务器日志，系统CPU、Memory等)，若干broker(Kafka支持水平扩展，一般broker数量越多，集群吞吐量越高)，若干Consumer Group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在Consumer Group发生变化时进行rebalance。Producer使用push模式将消息发布到broker，Consumer使用pull模式从broker订阅并消费消息。
 
@@ -88,11 +88,11 @@ payload ： n bytes
 ```
 这个`log entry`并非由一个文件构成，而是分成多个segment，每个segment以该segment第一条消息的offset命名并以`.kafka`为后缀。另外会有一个索引文件，它标明了每个segment下包含的`log entry`的offset范围，如下图所示。
 
-![](../images/kafka/kafka_1_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_1_2.png)
 
 因为每条消息都被append到该Partition中，属于顺序写磁盘，因此效率非常高（经验证，顺序写磁盘效率比随机写内存还要高，这是Kafka高吞吐率的一个很重要的保证）。
 
-![](../images/kafka/kafka_1_3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_1_3.png)
 
 对于传统的message queue而言，一般会删除已经被消费的消息，而Kafka集群会保留所有的消息，无论其被消费与否。当然，因为磁盘限制，不可能永久保留所有数据（实际上也没必要），因此Kafka提供两种策略删除旧数据。一是基于时间，二是基于Partition文件大小。例如可以通过配置$KAFKA_HOME/config/server.properties，让Kafka删除一周前的数据，也可在Partition文件超过1GB时删除旧数据，配置如下所示。
 
@@ -137,7 +137,7 @@ public class JasonPartitioner<T> implements Partitioner {
 
 使用Consumer high level API时，同一Topic的一条消息只能被同一个Consumer Group内的一个Consumer消费，但多个Consumer Group可同时消费这一消息。
 
-![](../images/kafka/kafka_1_4.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_1_4.png)
 
 这是Kafka用来实现一个Topic消息的广播（发给所有的Consumer）和单播（发给某一个Consumer）的手段。一个Topic可以对应多个Consumer Group。如果需要实现广播，只要每个Consumer有一个独立的Group就可以了。要实现单播只要所有的Consumer在同一个Group里。用Consumer Group还可以将Consumer进行自由的分组而不需要多次发送消息到不同的Topic。
 
