@@ -92,3 +92,7 @@ public abstract class RecordReader<KEYIN, VALUEIN> implements Closeable {
   public abstract void close() throws IOException;
 }
 ```
+
+## 参考博文
+
+[http://www.cnblogs.com/shitouer/archive/2013/02/28/hadoop-source-code-analyse-mapreduce-inputformat.html](http://www.cnblogs.com/shitouer/archive/2013/02/28/hadoop-source-code-analyse-mapreduce-inputformat.html)
