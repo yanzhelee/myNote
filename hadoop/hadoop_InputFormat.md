@@ -8,7 +8,7 @@ job.setInputFormatClass(KeyVakueTextInputFormat.class)
 ```
 通过上面的代码来保证输入的文件是按照我们想要的格式被读取，所有的输入格式都继承于InputFormat，这是一个抽象类，其子类有专门用于读取普通文件的FileInputFormatt，用于读取数据库文件的DBInputFromat，用于读取HBase的TableInputFormat等等。如下图是InputFormat的图谱。
 
-![InputFormat类图](../images/hadoop/hadoop_InputFormat_1.png)
+![InputFormat类图](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_InputFormat_1.png)
 
 ## 2 InputFormat方法
 
@@ -34,7 +34,7 @@ createRecordReader()方法是为给定的切片创建一个记录阅读器。在
 
 MapTask的输入是一个输入切片，称为InputSplit。InputSplit也是一个抽象类，它在逻辑上包含给处理这个InputSplit的Mapper的所有KV对。不同类型的输入格式对应不同类型的切片，下图是InputSplit的类图。
 
-![InputSplit](../images/hadoop/hadoop_InputFormat_2.png)
+![InputSplit](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_InputFormat_2.png)
 
 ### 3.1 InputSplit方法
 ```java
@@ -50,7 +50,7 @@ public SplitLocationInfo[] getLocationInfo()
 
 RecorderReader将读入到Map的数据拆分成KV对。RecorderReader也是一个抽象类。下面是RecordReader的类图：
 
-![InputFormat类图](../images/hadoop/hadoop_InputFormat_3.png)
+![InputFormat类图](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_InputFormat_3.png)
 
 接下来看一下RecordReader的源代码：
 ```java
