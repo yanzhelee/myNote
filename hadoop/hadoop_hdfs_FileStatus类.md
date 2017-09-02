@@ -93,3 +93,58 @@ public void setPath(final Path p)       // 设置Path路径
 public void setSymlink(final Path p)    // 设置符号链接
 public void write(DataOutput out)       // 序列化写入字段
 ```
+
+## 代码示例
+
+```java
+package com.hdfs;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.util.Progressable;
+
+public class HdfsTest1 {
+    //显示文件所有信息
+    public static void fileInfo(String path) throws IOException{
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(conf);
+        Path p = new Path(path);
+        //FileStatus对象封装了文件的和目录的额元数据，包括文件长度、块大小、权限等信息
+        FileStatus fileStatus = fs.getFileStatus(p);
+        System.out.println("文件路径："+fileStatus.getPath());
+        System.out.println("块的大小："+fileStatus.getBlockSize());
+        System.out.println("文件所有者："+fileStatus.getOwner()+":"+fileStatus.getGroup());
+        System.out.println("文件权限："+fileStatus.getPermission());
+        System.out.println("文件长度："+fileStatus.getLen());
+        System.out.println("备份数："+fileStatus.getReplication());
+        System.out.println("修改时间："+fileStatus.getModificationTime());
+    }
+    public static void main(String[] args) throws IOException {
+        fileInfo("/user/hadoop/aa.mp4");
+    }
+
+}
+```
+
+输出结果如下：
+
+```
+文件路径：hdfs://master:9000/user/hadoop/aa.mp4
+块的大小：67108864
+文件所有者：hadoop:supergroup
+文件权限：rw-r--r--
+文件长度：76805248
+备份数：3
+修改时间：1371484526483
+```
+
+## 参考博文
+
+[http://www.cnblogs.com/liuling/p/2013-6-18-01.html](http://www.cnblogs.com/liuling/p/2013-6-18-01.html)
