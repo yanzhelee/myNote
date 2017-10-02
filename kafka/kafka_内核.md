@@ -10,13 +10,13 @@ body是由N个字节构成的一个消息体，包含了具体的key/value消息
 
 存储在磁盘的日志采用不同于Producer发送的消息格式，每个日志文件都是一个"log entries"序列，每一个log entry包含一个offset(占8字节)信息，message size(四字节，整个log entry的长度)，CRC32(4字节)，magic(1字节)，attributes(1字节)，key length(4字节)，key(实际的key的值，它的长度是key length)，payload length(4字节，表示实际内容所占的长度)，payload(实际存放的内容)。log entry的具体格式如下图所示：
 
-![kafka log entry格式](../images/kafka/kafka_内核_1.png)
+![kafka log entry格式](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_%E5%86%85%E6%A0%B8_1.png)
 
 这个log entries并非由一个文件构成，而是分成多个segment file(日志文件，存储具体的消息记录)和一个索引文件(存储每个segment文件的offset偏移量范围)。结构如下图所示：
 
-![kafka log entry格式](../images/kafka/kafka_内核_2.png)
+![kafka log entry格式](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_%E5%86%85%E6%A0%B8_2.png)
 
-![kafka log entry格式](../images/kafka/kafka_内核_3.png)
+![kafka log entry格式](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_%E5%86%85%E6%A0%B8_3.png)
 
 ## 2 消息存储机制
 
@@ -27,9 +27,9 @@ Partition接收到 producer发送过来数据后，会产生一个递增的offse
 Consumer根据offset消费对应topic的partition中的数据(也就是每个consumer消费的每个topic的partition都拥有自己的offset偏移量)
 **注意**：kafka的数据消费是顺序读写的，磁盘的顺序读写速度(600MB/SEC)比随机读写速度(100K/SEC)要快得多。
 
-![kafka log entry格式](../images/kafka/kafka_内核_4.png)
+![kafka log entry格式](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_%E5%86%85%E6%A0%B8_4.png)
 
-![kafka log entry格式](../images/kafka/kafka_内核_5.png)
+![kafka log entry格式](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_%E5%86%85%E6%A0%B8_5.png)
 
 > Tip:
 > 硬盘的顺序读写比内存的随机读写速度要快
@@ -81,7 +81,7 @@ consumer rebalance：当一个consumer group中的消费者数量和对应的top
 
 consumer通过poll的方式主动从kafka集群中获取数据：
 
-![kafka log entry格式](../images/kafka/kafka_内核_6.png)
+![kafka log entry格式](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/kafka/kafka_%E5%86%85%E6%A0%B8_6.png)
 
 
 ## 参考博文
