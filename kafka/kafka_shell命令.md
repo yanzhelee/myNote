@@ -14,7 +14,7 @@ bin/kafka-topics.sh --zookeeper s100:2181 --create --topic test1 --partitions 3 
 > - 分区数也限制了producer发送消息是指定的分区。如创建topic时分区设置为1，producer发送消息时通过自定义的分区方法指定分区为2或以上的数都会出错的；这种情况可以通过alter-partitions来增加分区数。
 >
 > replication-factor副本
-> - replication factor控制消息保存在几个broker(服务器)上，一般情况下等于broker的个数。
+> - replication factor控制消息保存在几个broker(服务器)上，一般情况下等于broker的个数,replication-factor设置的值不能大于broker的个数。
 > - 如果没有在创建时显示指定或通过api向一个不存在的topic生产消息时会使用broker(server.properties)中的default.replication.factor配置的数量。
 
 ## 2 查看所有的topic列表
