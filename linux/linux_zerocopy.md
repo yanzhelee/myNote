@@ -12,11 +12,11 @@ File.send(socket,buf,len);
 
 图一展示了数据从文件到socket的内部过程：
 
-![](../images/linux/linux_zerocopy_1.gif)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/linux/linux_zerocopy_1.gif)
 
 图二是用户态和内核态的切换过程：
 
-![](../images/linux/linux_zerocopy_2.gif)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/linux/linux_zerocopy_2.gif)
 
 这些步骤涉及到如下过程：
 
@@ -49,11 +49,11 @@ transferTo(position,count,WritableChannel);
 ```
 下图展示了通过transferTo实现数据传输的路径：
 
-![](../images/linux/linux_zerocopy_3.gif)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/linux/linux_zerocopy_3.gif)
 
 下图展示了内核态、用户态的切换情况：
 
-![](../images/linux/linux_zerocopy_4.gif)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/linux/linux_zerocopy_4.gif)
 
 使用transferTo()方式所经历的步骤：
 > 1. transferTo调用会引起DMA将文件内容 复制到缓冲区(内核空间的缓冲区)，然后数据从这个缓冲区复制到另一个与socket输出相关的内核缓冲区中。
@@ -65,7 +65,7 @@ transferTo(position,count,WritableChannel);
 
 下图展示了transferTo的工作流程
 
-![](../images/linux/linux_zerocopy_5.gif)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/linux/linux_zerocopy_5.gif)
 
 ## 参考博文
 
