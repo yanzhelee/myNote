@@ -220,7 +220,7 @@ object RegexMatch {
 
 Option类型有两个子类型，分别是Some和None(单例对象)，下面给出的是Option类型在Scala语言中的类层次结构：
 
-![](../images/scala/scala_case_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_case_1.png)
 
 Option类其实是一个sealed class
 ```scala
