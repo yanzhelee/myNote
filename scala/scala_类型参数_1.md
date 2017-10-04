@@ -81,15 +81,15 @@ object ViewBound extends App{
 ```
 查看Scala API文档可以看到
 
-![](../images/scala/scala_typevariable_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_typevariable_1.png)
 
 Int类会隐式转换为RichInt类，RichInt并不是直接实现Comparable接口，而是通过ScalaNumberProxy类将Comparable中的方法继承过来：
 
-![](../images/scala/scala_typevariable_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_typevariable_2.png)
 
 ScalaNumberProxy混入了OrderedProxy，而OrderedProxy又混入了Ordered
 
-![](../images/scala/scala_typevariable_3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_typevariable_3.png)
 
 trait Ordered混入了Comparable接口
 
