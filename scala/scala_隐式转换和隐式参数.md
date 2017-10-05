@@ -4,7 +4,7 @@
 
 在scala语言中，隐式转换是无处不在的，只不过scala语言为我们隐藏了相应的细节，例如scala中的继承层次结构中：
 
-![](../images/scala/scala_implicit_1_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_implicit_1_1.png)
 
 它们存在固有的隐式转换，不需要人工进行干预，例如Float在必要的情况下自动转换为Double类型。
 
