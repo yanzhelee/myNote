@@ -4,9 +4,9 @@
 
 在介绍上下文界定之前，我们对scala中的Ordering和Ordered之间的关联与区别惊醒讲解，先看Ordering、Ordered的类继承层次体系：
 
-![](../images/scala/scala_typevariable_2_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_typevariable_2_1.png)
 
-![](../images/scala/scala_typevariable_2_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/scala/scala_typevariable_2_2.png)
 
 通过上面两张图可以看到Ordering混入了java中的Comparator接口，而Ordered混入了java中的Comparable接口，我们知道java中的Comparator是一个外部比较器，而Comparable则是一个内部比较器，例如：
 ```java
