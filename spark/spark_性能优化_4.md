@@ -30,7 +30,7 @@
 
 shuffle read的拉取过程是一边拉取一边进行聚合的。每个shuffle read task都会有一个自己的buffer缓冲，每次都只能拉取与buffer缓冲相同大小的数据，然后通过内存中的一个Map进行聚合等操作。聚合完一批数据后，再拉取下一批数据，并放到buffer缓冲中进行聚合操作。以此类推，直到最后将所有数据到拉取完，并得到最终的结果。
 
-![](../images/spark/spark_performance_4_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_4_1.png)
 
 ### 优化后的HashShuffleManager
 
@@ -42,7 +42,7 @@ shuffle read的拉取过程是一边拉取一边进行聚合的。每个shuffle 
 
 假设第二个stage有100个task，第一个stage有50个task，总共还是有10个Executor，每个Executor执行5个task。那么原本使用未经优化的HashShuffleManager时，每个Executor会产生500个磁盘文件，所有Executor会产生5000个磁盘文件的。但是此时经过优化之后，每个Executor创建的磁盘文件的数量的计算公式为：CPU core的数量 * 下一个stage的task数量。也就是说，每个Executor此时只会创建100个磁盘文件，所有Executor只会创建1000个磁盘文件。
 
-![](../images/spark/spark_performance_4_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_4_2.png)
 
 ## SortShuffleManager运行原理
 
@@ -58,7 +58,7 @@ SortShuffleManager的运行机制主要分成两种，一种是普通运行机�
 
 SortShuffleManager由于有一个磁盘文件merge的过程，因此大大减少了文件数量。比如第一个stage有50个task，总共有10个Executor，每个Executor执行5个task，而第二个stage有100个task。由于每个task最终只有一个磁盘文件，因此此时每个Executor上只有5个磁盘文件，所有Executor只有50个磁盘文件。
 
-![](../images/spark/spark_performance_4_3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_4_3.png)
 
 ### bypass运行机制
 

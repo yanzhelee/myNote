@@ -18,7 +18,7 @@
 
 下图就是一个很清晰的例子：hello这个key，在三个节点上对应了总共7条数据，这些数据都会被拉取到同一个task中进行处理；而world和you这两个key分别才对应1条数据，所以另外两个task只要分别处理1条数据即可。此时第一个task的运行时间可能是另外两个task的7倍，而整个stage的运行速度也由运行最慢的那个task所决定。
 
-![](../images/spark/spark_performance_3_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_3_1.png)
 
 ## 如何定位导致数据倾斜的代码
 
@@ -32,7 +32,7 @@
 
 比如下图中，倒数第三列显示了每个task的运行时间。明显可以看到，有的task运行特别快，只需要几秒钟就可以运行完；而有的task运行特别慢，需要几分钟才能运行完，此时单从运行时间上看就已经能够确定发生数据倾斜了。此外，倒数第一列显示了每个task处理的数据量，明显可以看到，运行时间特别短的task只需要处理几百KB的数据即可，而运行时间特别长的task需要处理几千KB的数据，处理的数据量差了10倍。此时更加能够确定是发生了数据倾斜。
 
-![](../images/spark/spark_performance_3_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_3_2.png)
 
 知道数据倾斜发生在哪一个stage之后，接着我们就需要根据stage划分原理，推算出来发生倾斜的那个stage对应代码中的哪一部分，这部分代码中肯定会有一个shuffle类算子。精准推算stage与代码的对应关系，需要对Spark的源码有深入的理解，这里我们可以介绍一个相对简单实用的推算方法：只要看到Spark代码中出现了一个shuffle类算子或者是Spark SQL的SQL语句中出现了会导致shuffle的语句（比如group by语句），那么就可以判定，以那个地方为界限划分出了前后两个stage。
 
@@ -123,7 +123,7 @@ sampledWordCounts.foreach(println(_))
 
 **方案实践经验**：该方案通常无法彻底解决数据倾斜，因为如果出现一些极端情况，比如某个key对应的数据量有100万，那么无论你的task数量增加到多少，这个对应着100万数据的key肯定还是会分配到一个task中去处理，因此注定还是会发生数据倾斜的。所以这种方案只能说是在发现数据倾斜时尝试使用的第一种手段，尝试去用嘴简单的方法缓解数据倾斜而已，或者是和其他方案结合起来使用。
 
-![](../images/spark/spark_performance_3_3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_3_3.png)
 
 ### 解决方案四：两阶段聚合（局部聚合+全局聚合）
 
@@ -137,7 +137,7 @@ sampledWordCounts.foreach(println(_))
 
 **方案缺点**：仅仅适用于聚合类的shuffle操作，适用范围相对较窄。如果是join类的shuffle操作，还得用其他的解决方案。
 
-![](../images/spark/spark_performance_3_4.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_3_4.png)
 
 ```
 // 第一步，给RDD中的每个key都打上一个随机前缀。
@@ -198,7 +198,7 @@ JavaPairRDD<Long, Long> globalAggrRdd = removedRandomPrefixRdd.reduceByKey(
 
 **方案缺点**：适用场景较少，因为这个方案只适用于一个大表和一个小表的情况。毕竟我们需要将小表进行广播，此时会比较消耗内存资源，driver和每个Executor内存中都会驻留一份小RDD的全量数据。如果我们广播出去的RDD数据比较大，比如10G以上，那么就可能发生内存溢出了。因此并不适合两个都是大表的情况。
 
-![](../images/spark/spark_performance_3_5.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_3_5.png)
 
 ```
 // 首先将数据量比较小的RDD的数据，collect到Driver中来。
@@ -254,7 +254,7 @@ JavaPairRDD<String, Tuple2<String, Row>> joinedRdd = rdd2.mapToPair(
 
 **方案缺点**：如果导致倾斜的key特别多的话，比如成千上万个key都导致数据倾斜，那么这种方式也不适合。
 
-![](../images/spark/spark_performance_3_6.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_3_6.png)
 
 ```
 // 首先从包含了少数几个导致数据倾斜key的rdd1中，采样10%的样本数据。

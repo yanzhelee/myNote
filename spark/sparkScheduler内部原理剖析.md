@@ -4,11 +4,11 @@
 
 Spark可以部署在多种资源管理平台，例如Yarn、Mesos等，Spark本身也实现了一个简易的资源管理机制，称之为Standalone模式。由于工作中接触较多的是Spark on Yarn，以下所述表示Spark on Yarn。Spark部署在Yarn上有两种运行模式，分别是client和cluster模式，它们的区别仅仅在于Spark Driver是运行在Client端还是ApplicationMaster端，如下图所示为spark部署在Yarn上，以cluster模式运行的分布式计算框架。
 
-![](../images/spark/spark_scheduler_1.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/masthttps://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_1.jpg)
 
 其中蓝色部分是Spark里的概念，包括Client、ApplicationMaster、Driver和Executor，其中Client和ApplicationMaster主要负责与Yarn进行交互；Driver作为Spark应用程序的总控，负责分发任务以及监控任务运行状态；Executor负责执行任务，并上报状态信息给Driver，从逻辑上来看Executor是进程，运行在其中的任务是线程，所以说Spark的任务是线程级别的。通过下面的时序图可以更清晰地理解一个Spark应用程序从提交到运行的完整流程。
 
-![](../images/spark/spark_scheduler_2.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_2.jpg)
 
 提交一个spark应用程序，首先通过Client想ResourceManager请求启动一个Application，同时检查是否有足够的资源满足Application的需求，如果资源条件满足，则将ApplicationMaster的启动上下文，交给ResourceManager，并循环监控Application状态。
 
@@ -31,11 +31,11 @@ Driver线程主要是初始化SparkContext对象，准备运行所需的上下�
 
 Spark的任务调度总体来说分两路进行，一路是Stage级的调度，一路是Task级的调度，总体调度流程如下图所示。
 
-![](../images/spark/spark_scheduler_3.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_3.jpg)
 
 Spark RDD通过其Transactions操作，形成了RDD血缘关系图，即DAG，最后通过Action的调用，触发Job并调度执行。DAGScheduler负责Stage级的调度，主要是将DAG切分成若干Stages，并将每个Stage打包成TaskSet交给TaskScheduler调度。TaskScheduler负责Task级的调度，将DAGScheduler给过来的TaskSet按照指定的调度策略分发到Executor上执行，调度过程中SchedulerBackend负责提供可用资源，其中SchedulerBackend有多种实现，分别对接不同的资源管理系统。有了上述感性的认识后下面这张图描述了Spark-On-Yarn模式下任务调度期间，ApplicationMaster、Driver以及Executor内部模块的交互过程。
 
-![](../images/spark/spark_scheduler_4.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_4.jpg)
 
 Driver初始化SparkContext过程中，会分别初始化DAGScheduler TaskScheduler SchedulerBackend以及HeartbeatReceiver。SchedulerBackend会启动一个RPC服务与外界打交道，SchedulerBackend通过ApplicationMaster申请资源，并不断从TaskScheduler中拿到合适的Task分发到Executor的存活状况，并通知到TaskScheduler。下面着重剖析DAGScheduler负责的Stage调度以及TaskScheduler负责的Task调度。
 
@@ -43,11 +43,11 @@ Driver初始化SparkContext过程中，会分别初始化DAGScheduler TaskSchedu
 
 Spark的任务调度是从DAG切割开始，主要是由DAGScheduler来完成。当遇到一个Action操作后就会触发一个Job的计算，并交给DAGScheduler来提交，下图是涉及到Job提交的相关方法调用流程图。
 
-![](../images/spark/spark_scheduler_5.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_5.jpg)
 
 Job由最终的RDD和Action方法封装而成，SparkContext将Job交给DAGScheduler提交，它会根据RDD的血缘关系构成的DAG进行切分，将一个Job划分为若干个Stages，具体划分策略是，由最终的RDD不断通过依赖回溯判断父依赖是否是宽依赖，即以shuffle为界，划分Stage，窄依赖的RDD之间被划分到同一个Stage中，可以进行pipeline式的计算，如上图紫色流程部分。划分的Stages分两类，一类叫做ResultStage，为DAG最下游的Stage，有Action方法决定，另一类叫做ShuffleMapStage，为下游Stage准备数据，下面看一个简单的例子WordCount.
 
-![](../images/spark/spark_scheduler_6.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_6.jpg)
 
 Job由`saveAsTextFile`触发，该Job由RDD-3和`saveAsTextFile`方法组成，根据RDD之间的依赖关系从RDD-3开始回溯搜索，直到没有依赖的RDD-0，在回溯搜索过程中，RDD-3依赖RDD-2，并且是宽依赖，所以在RDD-2和RDD-3之间划分Stage，RDD-3被划分到最后一个Stage，即ResultStage中，RDD-2依赖RDD-1,RDD-1依赖RDD-0,这些依赖都是窄依赖，所以将RDD-0 RDD-1 RDD-2划分到同一个Stage，即ShuffleMapStage中，实际执行的时候，数据记录会一气呵成地执行RDD-0到RDD-2的转化。不难看出，其本质上是一个深度优化搜索算法。
 
@@ -59,7 +59,7 @@ Job由`saveAsTextFile`触发，该Job由RDD-3和`saveAsTextFile`方法组成，�
 
 Spark Task的调度是由TaskScheduler来完成，由前文可知，DAGScheduler将Stage打包到 TaskSet交给TaskScheduler，TaskScheduler会将其封装为TaskSetManager加入到调度队列中，TaskSetManager负责监控管理同一个Stage中的Tasks。前面也提到，TaskScheduler初始化后会启动SchedulerBackend，它负责跟外界打交道，接收Executor的注册信息，并维护Executor的状态，所以说SchedulerBackend是管“粮食”的，同时它在启动后会定期地去“询问”TaskScheduler有没有任务要执行，也就是说，它会定期的问TaskScheduler“我有这么余量，你要不要啊”，TaskScheduler在SchedulerBackend问它的时候，会从调度队列中按照指定的调度策略选择TaskSetManager去调度运行，大致方法调用流程如下所示：
 
-![](../images/spark/spark_scheduler_7.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_7.jpg)
 
 ## 调度策略
 
@@ -67,11 +67,11 @@ Spark Task的调度是由TaskScheduler来完成，由前文可知，DAGScheduler
 
 TaskScheduler是以树的方式来管理任务队列，树中的节点为Schedulable，叶子节点为TaskSetManager，非叶子节点为Pool，下图是它们之间的继承关系。
 
-![](../images/spark/spark_scheduler_8.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_8.jpg)
 
 TaskScheduler支持两种调度策略，一种是FIFO，也是默认的调度策略，另一种是FAIR。在TaskScheduler初始化过程中会实例化rootPool，表示树的根节点，是Pool类型。如果是采用FIFO调度策略，则直接简单地将TaskSetManager按照先进先出的方式入队，出队时直接拿出最先进队的TaskSetManager，其树结构大致如下图所示，TaskSetManger保存在一个FIFO队列中。
 
-![](../images/spark/spark_scheduler_9.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_9.jpg)
 
 在阐述FAIR调度策略之前，先贴一段FAIR调度策略的应用程序代码，后面针对该代码逻辑来详细阐述FAIR调度的实现细节。
 ```scala
@@ -112,7 +112,7 @@ object MultiJobTest {
 
 上述应用程序中使用两个线程调用了Action方法，即有两个Job会并发提交，但是不管怎样，这两个Job被切分成若干TaskSet后终究会被交到TaskScheduler这里统一管理，其调度树大致如下图所示。
 
-![](../images/spark/spark_scheduler_10.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_10.jpg)
 
 在出队时，则会对所有TaskSetManager排序，具体排序过程是从根节点rootPool开始，递归地去排序子节点，最后合并到一个ArrayBuffer里，代码逻辑如下。
 ```scala
@@ -132,7 +132,7 @@ def getSortedTaskSetQueue: ArrayBuffer[TaskSetManager] = {
 
 从调度队列中拿到TaskSetManager后，那么接下来的工作就是TaskSetManager按照一定的规则一个个取出Task给TaskScheduler，TaskScheduler再交给SchedulerBackend去发到Executor上执行。前面也提到，TaskSetManager封装了一个Stage的所有Task，并负责管理调度这些Task。
 
-![](../images/spark/spark_scheduler_11.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_11.jpg)
 
 在TaskSetManager初始化过程中，会对Tasks按照Locality级别进行分类，Task的Locality有五种，优先级由高到低顺序：PROCESS_LOCAL(指定的Executor)，NODE_LOCAL(指定的主机节点)，NO_PREF(无所谓)，RACK_LOCAL(指定的机架)，ANY(满足不了Task的Locality就随便调度)。这五种Locality级别存在包含关系，RACK_LOCAL包含NODE_LOCAL,NODE_LOCAL包含PROCESS_LOCAL,然而ANY包含其它所有四种。初始化阶段在对Task分类时，根据Task的preferredLocations判断它属于哪个Locality级别，属于PROCESS_LOCAL的Task同时也会被加入到NODE_LOCAL、RACK_LOCAL类别中，比如，一个Task的preferredLocations指定了在Executor-2上执行，那么它属于Executor-2对应的PROCESS_LOCAL类别，同时也把他加入到Executor-2所在的主机对应的NODE_LOCAL类别，Executor-2所在的主机的机架对应的RACK_LOCAL类别中，以及ANY类别，这样在调度执行时，满足不了PROCESS_LOCAL，就逐步退化到NODE_LOCAL，RACK_LOCAL，ANY。
 
@@ -146,7 +146,7 @@ def resourceOffer(
 ```
 延迟调度算法的大致流程如下图所示。
 
-![](../images/spark/spark_scheduler_12.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_12.jpg)
 
 首先 看是否存在execId对应的PROCESS_LOCAL类别的任务，如果存在，取出来调度，否则根据当前时间，判断是否超过了PROCESS_LOCAL类别最大容忍的延迟，如果超过，则退化到下一个级别NODE_LOCAL，否则等待不调度。退化到下一个级别NODE_LOCAL后调度流程也类似，看是否存在host对应的NODE_LOCAL类别的任务，如果存在，取出来调度，否则根据当前时间，判断是否超过了NODE_LOCAL类别最大容忍的延迟，如果超过，则退化到下一个级别RACK_LOCAL,否则等待不调度，以此类推...。当不满足Locatity类别会选择等待，直到下一轮调度重复上述流程，如果你比较激进，可以调大每个类别的最大容忍延迟时间，如果不满足Locatity时就会等待多个调度周期，直到满足或者超过延迟时间退化到下一个级别为止。
 
@@ -160,11 +160,11 @@ def resourceOffer(
 
 TaskScheduler在启动SchedulerBackend后，还会启动一个后台线程专门负责推测任务的调度，推测任务是指对一个Task在不同的Executor上运行的实例,如果有Task实例运行成功，则会干掉其他Executor上运行的实例。推测调度线程会每隔固定时间检查是否有Task需要推测执行，如果有，则会调用SchedulerBackend的reviveOffers去尝试拿资源运行推测任务。
 
-![](../images/spark/spark_scheduler_13.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_13.jpg)
 
 检查是否有Task需要推测执行的逻辑最后会交到TaskSetManager，TaskSetManager采用基于统计的算法，检查Task是否需要推测执行，算法流程大致如下图所示。
 
-![](../images/spark/spark_scheduler_14.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_14.jpg)
 
 TaskSetManager首先会统计成功的Task数，当成功的Task数超过75%(可通过参数spark.speculation.quantile控制)时，再统计所有成功的Tasks的运行时间，得到一个中位数，用这个中位数乘以1.5(可通过参数spark.speculation.multiplier控制)得到运行时间门限，如果在运行的Tasks的运行时间超过这个门限，则对它启用推测。算法逻辑较为简单，其实就是对那些拖慢整体进度的Tasks启用推测，以加速整个TaskSet即Stage的运行。
 
@@ -178,7 +178,7 @@ TaskSetManager首先会统计成功的Task数，当成功的Task数超过75%(可
 
 在估计资源使用时，应当首先了解这些资源是怎么用的。任务的并行度由分区数(Partitions)决定，一个Stage有多少分区，就会有多少Task。每个Task默认占用一个Core，一个Executor上的所有core共享Executor上的内存，一次并行运行的Task数等于num_executor*executor_cores，如果分区数超过该值，则需要运行多个轮次，一般来说建议运行3～5轮较为合适，否则考虑增加num_executor或executor_cores。由于一个Executor的所有tasks会共享内存executor_memory，所以建议executor_cores不宜过大。executor_memory的设置则需要综合每个分区的数据量以及是否有缓存等逻辑。下图描绘了一个应用程序内部资源利用情况。
 
-![](../images/spark/spark_scheduler_15.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_scheduler_15.jpg)
 
 ## 动态资源申请
 

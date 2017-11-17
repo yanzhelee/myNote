@@ -8,7 +8,7 @@
 
 ## Spark作业基本运行原理
 
-![](../images/spark/spark_performance_2_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_2_1.png)
 
 详细原理见上图。我们使用spark-submit提交一个Spark作业之后，这个作业就会启动一个对应的Driver进程。根据你使用的部署模式(deploy-mode)不同，Driver进程可能在本地启动，也可能在集群中的某个工作节点上启动。Driver进程本身会根据我们设置的参数，占有一定数量的内存和CPU core。而Driver进程要做的第一件事，就是想集群管理器(可以是Spark Standalone集群，也可以是其他的资源管理集群，美团·大众点评使用的是YARN作为资源管理集群)申请运行Saprk作业需要使用的资源，这里的资源指的是Executor进程。YARN集群管理器会根据我们为Spark作业设置的资源参数，在各个工作节点上，启动一定数量的Executor进程，每个Executor进程都占有一定数量的内存和CPU core。
 
