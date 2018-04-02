@@ -71,6 +71,7 @@ SortShuffleManager由于有一个磁盘文件merge的过程，因此大大减少
 该过程的磁盘写机制其实跟未经优化的HashShuffleManager是一模一样的，因为都要创建数量惊人的磁盘文件，只是在最后会做一个磁盘文件的合并而已。因此少量的最终磁盘文件，也让该机制相对未经优化的HashShuffleManager来说，shuffle read的性能会更好。
 
 而该机制与普通SortShuffleManager运行机制的不同在于：第一，磁盘写机制不同；第二，不会进行排序。也就是说，启用该机制的最大好处在于，shuffle write过程中，不需要进行数据的排序操作，也就节省掉了这部分的性能开销。
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_performance_4_4.png)
 
 ## shuffle相关参数调优
 
