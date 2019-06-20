@@ -18,7 +18,7 @@ ResourceManager和NodeManager两个进程主要负责系统管理方面的任务
 
 下面我们看一下整个Yarn的架构图：
 
-![](../images/hadoop/hadoop_yarn_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_yarn_1.png)
 
 ## 2 Yarn组件详解
 

@@ -29,21 +29,21 @@ LDA是非监督的机器学习模型，并且使用词袋模型。一篇文章�
 
 这里我们引入狄利克雷分布函数：
 
-![](../images/algorithm/lda/1.1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/algorithm/lda/1.1.png)
 
 它所表达的含义简单来说就是，已知α<sub>1</sub>,α<sub>2</sub>,α<sub>3</sub>的条件下，概率p<sub>1</sub>,p<sub>2</sub>,p<sub>3</sub>的概率分布，也就是概率的概率，分布的分布。再直观点说就是：比如在已知α<sub>1</sub>,α<sub>2</sub>,α<sub>3</sub>为(5,7,4)(5,7,4)的条件下，样本点p<sub>1</sub>,p<sub>2</sub>,p<sub>3</sub>为(0.4,0.5,0.1)(0.4,0.5,0.1)的概率是多少。
 
 那么我们将上述的三维Dirichlet函数扩展为K维，即在已知α⃗的条件下，得到p⃗的分布(α⃗ ,p⃗分别为K维向量)。K维Dirichlet公式如下： 
 
-![](../images/algorithm/lda/1.2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/algorithm/lda/1.2.png)
 
 至此，我们通过输入超参数α⃗ 得到了文档d的关于K个主题的狄利克雷分布： 
 
-![](../images/algorithm/lda/1.3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/algorithm/lda/1.3.png)
 
 其含义显然，Dirichlet的输入参数为α⃗ ，得到的输出为可以理解为一个矩阵：
 
-![](../images/algorithm/lda/1.4.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/algorithm/lda/1.4.png)
 
 即文档d对应各个主题t<sub>k</sub>的概率分布的分布。
 
@@ -51,7 +51,7 @@ LDA是非监督的机器学习模型，并且使用词袋模型。一篇文章�
 
 同理，我们可以将任一主题t<sub>k</sub>产生各个词的概率表示出来。人为设置主题t<sub>k</sub>产生的各个词的数量，即设置超参数，用向量η⃗来表示。同上所述，将η⃗作为Dirichlet函数的输入参数，得到主题t<sub>k</sub>产生各个词的狄利克雷分布：
 
-![](../images/algorithm/lda/1.5.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/algorithm/lda/1.5.png)
 
 此时我们已经得到了文档d对应各个主题的概率分布的分布（即狄利克雷分布）θ<sub>d</sub>，以及文档t<sub>k</sub>产生各个词的概率分布的分布β<sub>k</sub>，那么接下来，我们要从文档d中取出第i个词，求这个词对应各个主题的分布； 
 
@@ -63,7 +63,7 @@ LDA是非监督的机器学习模型，并且使用词袋模型。一篇文章�
 
 首先我们引入十分熟悉的多项式分布：
 
-![](../images/algorithm/lda/1.6.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/algorithm/lda/1.6.png)
 
 > 这个公式的意义总所周知：已知一共n个球，且知道每种颜色球的概率，就可以得到有m<sub>1</sub>个红球,m<sub>2</sub>个黄球,m<sub>3</sub>个绿球的概率。
 

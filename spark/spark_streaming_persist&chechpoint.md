@@ -86,7 +86,7 @@ context.awitTermination()
 
 最终checkpoint的形式是将类Checkpoint的实例序列化后写入外部存储，值得一提的是，有专门的一条线程来做序列化后的checkpoint写入外部存储。类Checkpoint包含以下数据：
 
-![](../images/spark/spark_streaming_persist&chechpoint_1.jpg)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_streaming_persist&chechpoint_1.jpg)
 
 除了Checkpoint类，还有CheckpointWriter类用来导出checkpoint，CheckpointReader用来 导入checkpoint
 

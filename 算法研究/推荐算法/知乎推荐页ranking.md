@@ -8,11 +8,11 @@
 
 首先大家看一下知乎APP的推荐页的推荐结果，由于单厚智老师对机器学习比较感兴趣，所以推荐内容大部分和机器学习相关。
 
-![推荐结果](../../images/recommend/zhihu/1.png)
+![推荐结果](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/1.png)
 
 ## 一、推荐页请求流程
 
-![推荐页请求流程](../../images/recommend/zhihu/2.png)
+![推荐页请求流程](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/2.png)
 
 - 召回：负责将用户可能感兴趣的内容提取出来，重点是全
     > - 基于话题：获取用户的关注数据，用户行为挖掘
@@ -29,7 +29,7 @@
 
 首先介绍一下推荐页Ranking的演进历程,如下图所示，Ranking的演进主要经历了四个阶段。
 
-![](../../images/recommend/zhihu/3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/3.png)
 
 1. 按照时间排序
     > - 按照用户的行为，比如关注，动态等，并根据时间进行排序
@@ -94,7 +94,7 @@
 3. 模型：skip-gram
  4. loss：nce-loss
 
-![](../../images/recommend/zhihu/4.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/4.png)
 
 该方法借鉴word2vec的原理,通过“词”去预测“上下文”，这里面的“词”就是itemId，“上下文”就是指在点击该Item事件前后，固定窗口下其他Item的Id信息。
 
@@ -102,7 +102,7 @@
 
 下图是模型的训练结果，从结果可以看出，这些内容大体相似。
 
-![](../../images/recommend/zhihu/5.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/5.png)
 
 ## 四、CTR模型
 
@@ -119,11 +119,11 @@
 
 $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
-![](../../images/recommend/zhihu/6.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/6.png)
 
 ### 4.1 最初DNN结构
 
-![](../../images/recommend/zhihu/7.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/7.png)
 
 1. 将输入特征分为用户和内容两块
 2. 经过特征映射后分别通过全连接与两个独立的隐含层连接
@@ -134,7 +134,7 @@ $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
 ### 4.2 优化DNN结构
 
-![](../../images/recommend/zhihu/8.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/8.png)
 
 1. 将用户和内容的特征，分别按照内容的 field 分为不同的 block
 2. 每个 block 先经过全连接到独立的隐含层
@@ -144,7 +144,7 @@ $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
 ### 4.3 Deep FM
 
-![](../../images/recommend/zhihu/9.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/9.png)
 
 1. 增加了一阶和 FM 模块，FM 通过 block 之间的内积实现
 2. AUC 提升 0.2%
@@ -153,7 +153,7 @@ $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
 ### 4.4 Last View + DIN
 
-![](../../images/recommend/zhihu/10.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/10.png)
 
 1. Last view topic 与当前内容的几个 topic 计算 Attention Score，再按权重进行 sum pooling
 2. AUC 提升约 0.2%
@@ -162,7 +162,7 @@ $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
 ### 4.5 Last Display + GRU
 
-![](../../images/recommend/zhihu/11.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/11.png)
 
 根据4.4的思想，过去点击的行为对现在能够产生影响，那么同理，过去展示的内容中没有点击的内容对当下的点击行为同样会产生影响，所以这里面增加了Last Display(包括点击和没点击的所有数据)。
 
@@ -172,7 +172,7 @@ $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
 ### 4.6 多目标
 
-![](../../images/recommend/zhihu/12.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/12.png)
 
 之前所有的模型都是基于CTR为导向来进行设计的，但是这样用户的负反馈可能会比较多一些，因为一些长尾的内容，或者大众化的内容会比较多，影响用户的体验。
 
@@ -189,7 +189,7 @@ $$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
 
 ### 4.7 最终模型结构
 
-![](../../images/recommend/zhihu/13.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/recommend/zhihu/13.png)
 
 综合以上模型的优点，最终设计出如上图所示的模型。
 

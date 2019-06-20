@@ -8,7 +8,7 @@ FileInputFormat是专门针对文件类型的数据源而设计的，也是一�
 
 至于如何将切片中的数据转换为一条条的记录，则根据文件类型的不同交由具体的子类负责实现。下图是FileInputFormat类图：
 
-![FileInputFormat](../images/hadoop/hadoop_InputFormat_FileInputFormat_1.png)
+![FileInputFormat](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/hadoop/hadoop_InputFormat_FileInputFormat_1.png)
 
 **FileInputFormat提供了四个静态方法用于定义Job的输入文件路径**
 ```java

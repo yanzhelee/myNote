@@ -4,7 +4,7 @@
 
 在人工智能领域，有一个方法叫机器学习。在机器学习领域，有一类算法叫做神经网络。神经网络如下图所示：
 
-![](../../images/machinelearning/deeplearning/perceptron_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_1.png)
 
 上图中每个圆圈都是一个神经元，每条线表示神经元之间的连接。我们可以看到，上面的神经元被分成了多层，层与层之间的神经元有了连接，而层内之间的神经元没有连接。最左边的层叫做输入层，这层负责接收输入数据；最右边的层叫做输出层，我们可以从这层获取神经网络输出数据。输入层和输出层之间的层叫做隐藏层。
 
@@ -22,18 +22,18 @@
 
 下图是一个感知器：
 
-![](../../images/machinelearning/deeplearning/perceptron_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_2.png)
 
 可以看到，一个感知器有如下组成部分：
 
-- **输入权值** 一个感知器可以接收多个输入![](../../images/machinelearning/deeplearning/perceptron_3.png),每个输入上有一个权值![](../../images/machinelearning/deeplearning/perceptron_4.png),此外还有一个偏置项b，就是上图中的w_0
+- **输入权值** 一个感知器可以接收多个输入![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_3.png),每个输入上有一个权值![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_4.png),此外还有一个偏置项b，就是上图中的w_0
 - **激活函数** 感知器的激活函数可以有很多选择，比如我们可以选择下面这个阶跃函数 fun 来作为激活函数：
 
-![](../../images/machinelearning/deeplearning/perceptron_5.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_5.png)
 
 - **输出** 感知器的输出由下面这个公式来计算
 
-![](../../images/machinelearning/deeplearning/perceptron_6.png) 公式(1)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_6.png) 公式(1)
 
 如果看完上面的公式一下子就晕了，不要紧，我们用一个简单的例子来帮助理解。
 
@@ -50,27 +50,27 @@
 
 为了计算方便，我们用0表示false，用1表示true。这没什么难理解的，对于C语言程序员来说，这是天经地义的。
 
-我们令![](../../images/machinelearning/deeplearning/perceptron_7.png)，而激活函数就是前面写出来的阶跃函数，这时，感知器就相当于and函数。不明白？我们验算一下：
+我们令![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_7.png)，而激活函数就是前面写出来的阶跃函数，这时，感知器就相当于and函数。不明白？我们验算一下：
 
-![](../../images/machinelearning/deeplearning/perceptron_8.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_8.png)
 
 ### 感知器还能做什么
 
 事实上，感知器不仅仅能实现简单的布尔运算。它可以拟合任何的线性函数，任何线性分类或线性回归问题都可以用感知器来解决。前面的布尔运算可以看作是二分类问题，即给定一个输入，输出0（属于分类0）或1（属于分类1）。如下面所示，and运算是一个线性分类问题，即可以用一条直线把分类0（false，红叉表示）和分类1（true，绿点表示）分开。
 
-![](../../images/machinelearning/deeplearning/perceptron_9.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_9.png)
 
 然而，感知器却不能实现异或运算，如下图所示，异或运算不是线性的，你无法用一条直线把分类0和分类1分开。
 
-![](../../images/machinelearning/deeplearning/perceptron_10.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_10.png)
 
 ### 感知器的训练
 
 现在，你可能困惑前面的权重项和偏置项的值是如何获得的呢？这就要用到感知器训练算法：将权重项和偏置项初始化为0，然后，利用下面的感知器规则迭代的修改w_i和b，直到训练完成。
 
-![](../../images/machinelearning/deeplearning/perceptron_11.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_11.png)
 
-![](../../images/machinelearning/deeplearning/perceptron_12.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_12.png)
 
 ## 代码实现
 
@@ -195,7 +195,7 @@ if __name__ == '__main__':
 
 将上述程序保存为perceptron.py文件，通过命令行执行这个程序，其运行结果为：
 
-![](../../images/machinelearning/deeplearning/perceptron_13.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/deeplearning/perceptron_13.png)
 
 ## 参考博文
 

@@ -1,6 +1,6 @@
 # spark 生态及运行原理
 
-![](../images/spark/spark_principle_1.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_1.png)
 
 ## spark 特点
 
@@ -21,11 +21,11 @@
 
 spark基础运行结构如下图所示：
 
-![](../images/spark/spark_principle_2.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_2.png)
 
 spark结合yarn集群背后的运行流程如下图所示：
 
-![](../images/spark/spark_principle_3.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_3.png)
 
 ### spark 运行流程
 
@@ -60,17 +60,17 @@ spark架构采用了分布式计算中的Master-Slave模型。Master是对应集
 
 ## Spark核心概念之RDD
 
-![](../images/spark/spark_principle_4.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_4.png)
 
 ## Spark核心概念之Shuffle
 
 以reduceByKey为例解释shuffle过程。
 
-![](../images/spark/spark_principle_5.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_5.png)
 
 **在没有task的文件分片合并下的shuffle过程如下：**(spark.shuffle.consolidateFiles=false)
 
-![](../images/spark/spark_principle_6.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_6.png)
 
 ### fetch来的数据存放到哪里？
 
@@ -87,7 +87,7 @@ shuffle之所以需要把中间结果放到磁盘文件中，是因为虽然上�
 
 **在进行task的文件分片合并下的shuffle过程如下：**（spark.shuffle.consolidateFiles=true）
 
-![](../images/spark/spark_principle_7.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/spark/spark_principle_7.png)
 
 可以明显看出，在一个 core 上连续执行的 ShuffleMapTasks 可以共用一个输出文件 ShuffleFile。先执行完的 ShuffleMapTask 形成 ShuffleBlock i，后执行的 ShuffleMapTask 可以将输出数据直接追加到 ShuffleBlock i 后面，形成 ShuffleBlock i'，每个 ShuffleBlock 被称为 FileSegment。下一个 stage 的 reducer 只需要 fetch 整个 ShuffleFile 就行了。这样，每个 worker 持有的文件数降为 cores * R。FileConsolidation 功能可以通过spark.shuffle.consolidateFiles=true来开启。
 

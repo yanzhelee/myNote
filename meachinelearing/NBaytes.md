@@ -8,7 +8,7 @@
 
 > 既然是贝叶斯分类算法，那么分类的数学描述又是什么呢？
 
-从数学角度来说，分类问题可做如下定义：已知集合![](../images/machinelearning/nbaytes_1.png) 和![](../images/machinelearning/nbaytes_2.png),确定映射规则`y = f(x)`，使得任意![](../images/machinelearning/nbaytes_3.png)有且只有一个![](../images/machinelearning/nbaytes_4.png),使得![](../images/machinelearning/nbaytes_5.png)成立。
+从数学角度来说，分类问题可做如下定义：已知集合![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_1.png) 和![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_2.png),确定映射规则`y = f(x)`，使得任意![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_3.png)有且只有一个![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_4.png),使得![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_5.png)成立。
 
 其中C叫做类别集合，其中每个元素是一个类别，而I叫做项集合(特征集合)，其中每一个元素是一个待分类项，f叫做分类器。分类算法的任务就是构造分类器f。
 
@@ -22,11 +22,11 @@
 
 是下面这个贝叶斯公式：
 
-![](../images/machinelearning/nbaytes_6.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_6.png)
 
 换个表达形式就会明朗很多，如下：
 
-![](../images/machinelearning/nbaytes_7.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_7.png)
 
 我们最终求的p(类别|特征)即可！就相当于完成了我们的任务。
 
@@ -36,7 +36,7 @@
 
 给定数据如下：
 
-![](../images/machinelearning/nbaytes_8.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_8.png)
 
 现在给我们的问题是，如果一对男女朋友，男生向女生求婚，男生的四个特征分别是不帅，性格不好，身高矮，不上进，请你判断一下女生是嫁还是不嫁？
 
@@ -44,7 +44,7 @@
 
 这里我们联系到朴素贝叶斯公式：
 
-![](../images/machinelearning/nbaytes_9.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_9.png)
 
 我们需要求p(嫁|(不帅、性格不好、身高矮、不上进),这是我们不知道的，但是通过朴素贝叶斯公式可以转化为好求的三个量.
 
@@ -58,7 +58,7 @@ p(不帅、性格不好、身高矮、不上进|嫁)、p（不帅、性格不好
 是根据已知训练数据统计得来，下面详细给出该例子的求解过程。
 回忆一下我们要求的公式如下：
 
-![](../images/machinelearning/nbaytes_9.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_9.png)
 
 那么我只要求得p(不帅、性格不好、身高矮、不上进|嫁)、p（不帅、性格不好、身高矮、不上进)、p(嫁)即可，好的，下面我分别求出这几个概率，最后一比，就得到最终结果。
 
@@ -80,26 +80,26 @@ p(不帅、性格不好、身高矮、不上进|嫁) = p(不帅|嫁)*p(性格不
 
 我们将上面公式整理一下如下：
 
-![](../images/machinelearning/nbaytes_10.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_10.png)
 
 下面我将一个一个的进行统计计算（在数据量很大的时候，根据中心极限定理，频率是等于概率的，这里只是一个例子，所以我就进行统计即可）。
 
 p(嫁)=？
 首先我们整理训练数据中，嫁的样本数如下：
 
-![](../images/machinelearning/nbaytes_11.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_11.png)
 
 则 p(嫁) = 6/12（总样本数） = 1/2
 
 p(不帅|嫁)=？统计满足样本数如下：
 
-![](../images/machinelearning/nbaytes_12.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_12.png)
 
 则p(不帅|嫁) = 3/6 = 1/2 在嫁的条件下，看不帅有多少
 
 p(性格不好|嫁)= ？统计满足样本数如下：
 
-![](../images/machinelearning/nbaytes_13.png)
+![](https://raw.githubusercontent.com/yanzhelee/myNote/master/images/machinelearning/nbaytes_13.png)
 
 则p(性格不好|嫁)= 1/6
 
