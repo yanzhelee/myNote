@@ -117,6 +117,8 @@
 
 损失函数采用交叉熵：
 
+$$ Loss = -\sum_{i=1}^{N}(y_{i}log(p_{i}) + (1-y_{i})log(1-p_{i})) $$
+
 ![](../../images/recommend/zhihu/6.png)
 
 ### 4.1 最初DNN结构
